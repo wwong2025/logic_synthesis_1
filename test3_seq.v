@@ -1,5 +1,5 @@
 module sequential_test (
-    input clk,
+    input test_clk,
     input rst,
     input A,
     input B,
@@ -13,7 +13,7 @@ module sequential_test (
     assign w1 = A & B | C;
 
     // Sequential block path for testing parseAlways
-    always @(posedge clk) begin
+    always @(posedge test_clk) begin
         if (rst) begin
             Q_out <= 1'b0;
         end

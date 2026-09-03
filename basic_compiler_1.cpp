@@ -5,7 +5,7 @@ Points to note:
 (2) Limitations: current code only parses one modules
 (3) Assumed verilog syntax is correct
 (4) Not all verilog cases are handled
-(5) Primary purpose to have parsing correct, not yet optimized. Example, cascading logics are split into two-input gates only
+(5) Primary purpose to have parsing correct, not yet optimized. Example, cascading logics are split into two-input gates only. Example, sequential parsing syntax is rigid.
 
 Next steps: 
 (1) Add Bit-Blasting for Vector Buses: Support multi-bit registers and wires (e.g., input [3:0] A; and assign Y = A + 1;).
@@ -471,14 +471,21 @@ public:
         std::string clock_name = "clk";
         size_t pos = is_posedge ? first_line.find("posedge") : first_line.find("negedge");
         if (pos != std::string::npos) {
-            size_t start = first_line.find_first_not_of(" \t", pos + 7);
-            size_t end = first_line.find_first_of(" \t)", start);
-            if (start != std::string::npos && end != std::string::npos) {
-                clock_name = first_line.substr(start, end - start);
-                clock_name.erase(std::remove(clock_name.begin(), clock_name.end(), ')'), clock_name.end());
-                clock_name.erase(std::remove(clock_name.begin(), clock_name.end(), ' '), clock_name.end());
+            size_t start = first_line.find_first_not_of(" \t(", pos + 7);
+            if (start != std::string::npos) {
+                size_t end = first_line.find_first_of(" \t)", start);
+                if (end != std::string::npos) {
+                    clock_name = first_line.substr(start, end - start);
+                } else {
+                    clock_name = first_line.substr(start);
+                }
             }
         }
+        // Completely clean the clock name of any stray formatting fragments
+        clock_name = clean(clock_name);
+        // Explicit safety strip for stray parentheses just in case clean() missed them
+        clock_name.erase(std::remove(clock_name.begin(), clock_name.end(), ')'), clock_name.end());
+        clock_name.erase(std::remove(clock_name.begin(), clock_name.end(), '('), clock_name.end());
 
         // 2. Consume multi-line body
         std::vector<std::string> body_lines;
