@@ -6,7 +6,10 @@ module test (
     output Z
 );
 
-assign Y = A | B & C ;
-assign Z = ~(C & A) ;
+wire w1;
+
+assign w1 = A & B ;
+assign Y = w1 | C ;
+assign Z = ~C ;
 
 endmodule
