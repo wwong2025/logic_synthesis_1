@@ -5,7 +5,7 @@ Points to note:
 (2) Limitations: current code only parses one modules
 (3) Assumed verilog syntax is correct
 (4) Not all verilog cases are handled
-(5) Primary purpose to have parsing correct, not yet optimized. Example, cascading logics are split into two-input gates only. Example, sequential parsing syntax is rigid.
+(5) Primary purpose to have parsing correct, not yet optimized. Example, cascading logics are split into two-input gates only. Example, sequential parsing syntax is rigid and only simple reset flipflops.
 
 Next steps: 
 (1) Add Bit-Blasting for Vector Buses: Support multi-bit registers and wires (e.g., input [3:0] A; and assign Y = A + 1;).
