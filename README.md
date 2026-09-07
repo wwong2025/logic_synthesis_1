@@ -7,4 +7,4 @@ After translation, run_check.sh script to automatically check for logic equivale
 Usage: 
 Step 1: ./basic_compiler_1 xxxxx.v
 Step 2: source [yosys_path]/environment
-Step 3: ./run_check.sh
+Step 3: ./run_check.sh xxxxx.v
