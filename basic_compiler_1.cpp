@@ -716,7 +716,7 @@ int main(int argc, char* argv[]) {
     size_t last_dot = input_filepath.find_last_of(".");
     std::string base_name = (last_dot == std::string::npos) ? input_filepath : input_filepath.substr(0, last_dot);
     std::string output_filepath = base_name + ".blif";
-    size_t last_slash = base_name.find_last_of("\\");
+    size_t last_slash = base_name.find_last_of("/\\");
     std::string model_name = (last_slash == std::string::npos) ? base_name : base_name.substr(last_slash + 1);
     
     synth.exportToBlif(model_name, output_filepath);

@@ -6,12 +6,9 @@ module sequential_test (
     input C,
     output reg Q_out
 );
-
     wire w1;
-
     // Combinational logic path
     assign w1 = A & B | C;
-
     // Sequential block path for testing parseAlways
     always @(posedge clk) begin
         if (rst) begin
@@ -21,6 +18,5 @@ module sequential_test (
             Q_out <= w1;
         end
     end
-
 endmodule
 
